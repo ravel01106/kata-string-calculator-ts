@@ -8,4 +8,11 @@ describe("String calculator should", () => {
 
     expect(result).toBe(0)
   })
+
+  it(" return the number when given only a number", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("2")
+
+    expect(result).toBe(2)
+  })
 })
