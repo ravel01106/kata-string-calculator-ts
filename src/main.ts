@@ -5,11 +5,7 @@ export class StringCalculator {
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
 
-    if (numbers.includes("\n")) {
-      result = this.sumNumbers(/,|\n/, numbers)
-    } else {
-      result = this.sumNumbers(/,/, numbers)
-    }
+    result = this.sumNumbers(/,|\n/, numbers)
 
     return result
   }
