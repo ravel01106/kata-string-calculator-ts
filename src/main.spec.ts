@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest"
 import { StringCalculator } from "./main.js"
 
 describe("String calculator should", () => {
-  it(" return 0 if an empty string is passed", () => {
+  it(" return 0 when an empty string is passed", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("")
 
