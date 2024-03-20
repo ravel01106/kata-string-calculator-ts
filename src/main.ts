@@ -6,15 +6,19 @@ export class StringCalculator {
     else if (numbers.length == 1) return Number(numbers)
 
     if (numbers.includes("\n")) {
-      numbers.split(/,|\n/).forEach((num: String) => {
-        result = result + Number(num)
-      })
+      result = this.sumNumbers(/,|\n/, numbers)
     } else {
-      numbers.split(",").forEach((num: String) => {
-        result = result + Number(num)
-      })
+      result = this.sumNumbers(/,/, numbers)
     }
 
+    return result
+  }
+
+  private sumNumbers(separator: RegExp, numbers: String): number {
+    let result: number = 0
+    numbers.split(separator).forEach((num: String) => {
+      result = result + Number(num)
+    })
     return result
   }
 }
