@@ -1,3 +1,3 @@
-export function myFunction() {
-  return true
+export class StringCalculator {
+  add(numbers: String): Number {}
 }

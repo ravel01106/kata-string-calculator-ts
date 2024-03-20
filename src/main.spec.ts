@@ -1,10 +1,11 @@
 import { describe, it, expect } from "vitest"
-import { myFunction } from "./main.js"
+import { StringCalculator } from "./main.js"
 
-describe("Default test", () => {
-  it("should work", () => {
-    const result = myFunction()
+describe("String calculator should", () => {
+  it(" return 0 if an empty string is passed", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("")
 
-    expect(result).toBe(true)
+    expect(result).toBe(0)
   })
 })
