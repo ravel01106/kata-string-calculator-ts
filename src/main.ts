@@ -1,6 +1,14 @@
 export class StringCalculator {
-  add(numbers: String): Number {
+  add(numbers: String): number {
+    let result: number = 0
+
     if (numbers == "") return 0
-    return Number(numbers)
+    else if (numbers.length == 1) return Number(numbers)
+
+    numbers.split(",").forEach((num: String) => {
+      result = result + Number(num)
+    })
+
+    return result
   }
 }
