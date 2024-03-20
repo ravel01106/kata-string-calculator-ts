@@ -29,4 +29,11 @@ describe("String calculator should", () => {
 
     expect(result).toBe(6.6)
   })
+
+  it(" return the total sum when given numbers separated by commas or newlines", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("1\n2,3")
+
+    expect(result).toBe(6)
+  })
 })

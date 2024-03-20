@@ -5,9 +5,15 @@ export class StringCalculator {
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
 
-    numbers.split(",").forEach((num: String) => {
-      result = result + Number(num)
-    })
+    if (numbers.includes("\n")) {
+      numbers.split(/,|\n/).forEach((num: String) => {
+        result = result + Number(num)
+      })
+    } else {
+      numbers.split(",").forEach((num: String) => {
+        result = result + Number(num)
+      })
+    }
 
     return result
   }
