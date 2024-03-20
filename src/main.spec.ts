@@ -15,4 +15,11 @@ describe("String calculator should", () => {
 
     expect(result).toBe(2)
   })
+
+  it(" return the total sum when given numbers separated by commas", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("1,2,3")
+
+    expect(result).toBe(6)
+  })
 })
