@@ -22,4 +22,11 @@ describe("String calculator should", () => {
 
     expect(result).toBe(6)
   })
+
+  it(" return the total sum when given decimals separated by commas", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("1.1,2.2,3.3")
+
+    expect(result).toBe(6.6)
+  })
 })
