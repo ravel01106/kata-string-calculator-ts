@@ -48,4 +48,11 @@ describe("String calculator should", () => {
     const stringCalculator = new StringCalculator()
     expect(() => stringCalculator.add("1,3,")).toThrowError(/^Number expected but EOF found.$/)
   })
+
+  it(" return the total sum when given numbers separated by custom separator", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("//;\n1;2")
+
+    expect(result).toBe(3)
+  })
 })

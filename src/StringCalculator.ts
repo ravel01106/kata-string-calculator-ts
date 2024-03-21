@@ -13,9 +13,11 @@ export class StringCalculator {
   }
 
   private checkNumberSeparators(numbers: String) {
-    if (numbers.includes(",\n") || numbers.includes("\n,")) {
+    if (numbers.endsWith(",") || numbers.endsWith("\n")) {
+      throw new Error(`Number expected but EOF found.`)
+    } else if (numbers.includes(",\n") || numbers.includes("\n,")) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
-    } else if (numbers.endsWith(",") || numbers.endsWith("\n")) throw new Error(`Number expected but EOF found.`)
+    }
   }
 
   private sumNumbers(separator: RegExp, numbers: String): number {
