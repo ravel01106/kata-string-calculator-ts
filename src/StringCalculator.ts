@@ -7,12 +7,8 @@ export class StringCalculator {
     else if (numbers.length == 1) return Number(numbers)
 
     if (numbers.startsWith("//")) {
-      separator = numbers.substring(2, numbers.indexOf("\n"))
-
-      separator = this.isVerticalBar(separator) ? "\\||\n" : separator + "|\n"
-      console.log(separator)
+      separator = this.createCustomSeparator(numbers)
       numbers = numbers.substring(numbers.indexOf("\n"))
-      console.log(numbers)
     }
 
     let separatorRegx: RegExp = new RegExp(separator)
@@ -26,6 +22,14 @@ export class StringCalculator {
 
   private isVerticalBar(separator: String): Boolean {
     return separator == "|"
+  }
+
+  private createCustomSeparator(numbers: String): string {
+    let separator = numbers.substring(2, numbers.indexOf("\n"))
+
+    separator = this.isVerticalBar(separator) ? "\\||\n" : separator + "|\n"
+
+    return separator
   }
 
   private checkNumberSeparators(numbers: String) {
