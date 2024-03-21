@@ -4,6 +4,9 @@ export class StringCalculator {
 
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
+    else if (numbers.includes(",\n") || numbers.includes("\n,")) {
+      throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
+    }
 
     result = this.sumNumbers(/,|\n/, numbers)
 

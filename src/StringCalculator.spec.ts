@@ -36,4 +36,11 @@ describe("String calculator should", () => {
 
     expect(result).toBe(6)
   })
+
+  it(" return error when there are two separators together", () => {
+    const stringCalculator = new StringCalculator()
+    expect(() => stringCalculator.add("175.2,\n35")).toThrowError(
+      /^Number expected but '\\n' found at the position 6.$/,
+    )
+  })
 })
