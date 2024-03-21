@@ -4,13 +4,18 @@ export class StringCalculator {
 
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
-    else if (numbers.includes(",\n") || numbers.includes("\n,")) {
-      throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
-    } else if (numbers.endsWith(",") || numbers.endsWith("\n")) throw new Error(`Number expected but EOF found.`)
+
+    this.checkNumberSeparators(numbers)
 
     result = this.sumNumbers(/,|\n/, numbers)
 
     return result
+  }
+
+  private checkNumberSeparators(numbers: String) {
+    if (numbers.includes(",\n") || numbers.includes("\n,")) {
+      throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
+    } else if (numbers.endsWith(",") || numbers.endsWith("\n")) throw new Error(`Number expected but EOF found.`)
   }
 
   private sumNumbers(separator: RegExp, numbers: String): number {
