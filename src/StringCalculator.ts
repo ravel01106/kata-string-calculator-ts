@@ -1,13 +1,23 @@
 export class StringCalculator {
   add(numbers: String): number {
     let result: number = 0
+    let separator: string = ",|\n"
 
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
 
+    if (numbers.startsWith("//")) {
+      separator = numbers.substring(2, numbers.indexOf("\n")) + "|\n"
+      console.log(separator)
+      numbers = numbers.substring(numbers.indexOf("\n"))
+      console.log(numbers)
+    }
+
+    let separatorRegx: RegExp = new RegExp(separator)
+
     this.checkNumberSeparators(numbers)
 
-    result = this.sumNumbers(/,|\n/, numbers)
+    result = this.sumNumbers(separatorRegx, numbers)
 
     return result
   }
