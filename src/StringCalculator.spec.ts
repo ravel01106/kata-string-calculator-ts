@@ -43,4 +43,9 @@ describe("String calculator should", () => {
       /^Number expected but '\\n' found at the position 6.$/,
     )
   })
+
+  it(" return error when the last character is a separator", () => {
+    const stringCalculator = new StringCalculator()
+    expect(() => stringCalculator.add("1,3,")).toThrowError(/^Number expected but EOF found.$/)
+  })
 })
