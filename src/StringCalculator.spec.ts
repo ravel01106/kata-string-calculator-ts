@@ -55,4 +55,17 @@ describe("String calculator should", () => {
 
     expect(result).toBe(3)
   })
+  it(" return the total sum when given numbers separated by another custom separator", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("//sep\n2sep3")
+
+    expect(result).toBe(5)
+  })
+
+  it(" return the total sum when given numbers separated by vertical bar separator", () => {
+    const stringCalculator = new StringCalculator()
+    const result = stringCalculator.add("//|\n1|2|3")
+
+    expect(result).toBe(6)
+  })
 })

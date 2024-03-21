@@ -7,7 +7,9 @@ export class StringCalculator {
     else if (numbers.length == 1) return Number(numbers)
 
     if (numbers.startsWith("//")) {
-      separator = numbers.substring(2, numbers.indexOf("\n")) + "|\n"
+      separator = numbers.substring(2, numbers.indexOf("\n"))
+
+      separator = this.isVerticalBar(separator) ? "\\||\n" : separator + "|\n"
       console.log(separator)
       numbers = numbers.substring(numbers.indexOf("\n"))
       console.log(numbers)
@@ -20,6 +22,10 @@ export class StringCalculator {
     result = this.sumNumbers(separatorRegx, numbers)
 
     return result
+  }
+
+  private isVerticalBar(separator: String): Boolean {
+    return separator == "|"
   }
 
   private checkNumberSeparators(numbers: String) {
