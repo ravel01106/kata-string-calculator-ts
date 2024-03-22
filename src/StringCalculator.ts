@@ -8,12 +8,12 @@ export class StringCalculator {
 
     if (numbers.startsWith("//")) {
       separator = this.createCustomSeparator(numbers)
-      numbers = numbers.substring(numbers.indexOf("\n"))
+      numbers = numbers.substring(numbers.indexOf("\n") + 1)
     }
 
     let separatorRegx: RegExp = new RegExp(separator + "|\n")
 
-    this.checkNumberSeparators(numbers)
+    this.checkNumberSeparators(numbers, separatorRegx, separator)
 
     result = this.sumNumbers(separatorRegx, numbers)
 
@@ -32,12 +32,22 @@ export class StringCalculator {
     return separator
   }
 
-  private checkNumberSeparators(numbers: string) {
+  private checkNumberSeparators(numbers: string, separator: RegExp, separatorStr: String) {
     if (numbers.endsWith(",") || numbers.endsWith("\n")) {
       throw new Error(`Number expected but EOF found.`)
     } else if (numbers.includes(",\n") || numbers.includes("\n,")) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
+
+    numbers.split(separator).forEach((num: string) => {
+      console.log("num ->" + num + "<- num")
+      if (num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null) {
+        console.log(num.match(/[^0-9]/)?.[0])
+        throw new Error(
+          `'${separatorStr}' expected but '${num.match(/[^0-9]/)?.[0]}' found at position ${numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)}`,
+        )
+      }
+    })
   }
 
   private sumNumbers(separator: RegExp, numbers: String): number {

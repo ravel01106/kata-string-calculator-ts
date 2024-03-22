@@ -68,4 +68,9 @@ describe("String calculator should", () => {
 
     expect(result).toBe(6)
   })
+
+  it(" return error sum when there is a separator other than the custom separator", () => {
+    const stringCalculator = new StringCalculator()
+    expect(() => stringCalculator.add("//|\n1|2,3")).toThrowError(/^'\\|' expected but ',' found at position 3.$/)
+  })
 })
