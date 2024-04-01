@@ -78,4 +78,9 @@ describe("String calculator should", () => {
     const stringCalculator = new StringCalculator()
     expect(() => stringCalculator.add("-1,2")).toThrowError(/^Negative not allowed : -1.$/)
   })
+
+  it(" return error with all negative numbers when it has.", () => {
+    const stringCalculator = new StringCalculator()
+    expect(() => stringCalculator.add("2,-4,-5")).toThrowError(/^Negative not allowed : -4, -5.$/)
+  })
 })
