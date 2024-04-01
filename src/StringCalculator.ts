@@ -38,7 +38,7 @@ export class StringCalculator {
     } else if (numbers.includes(`${separatorStr}\n`) || numbers.includes(`\n${separatorStr}`)) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
-
+    this.checkNegativeNumbers(numbers, separator)
     numbers.split(separator).forEach((num: string) => {
       this.checkNumber(num, separatorStr, numbers)
     })
@@ -56,7 +56,31 @@ export class StringCalculator {
     return num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null
   }
 
+  private isNegativeNumber(num: string) {
+    return num.match(/^-[0-9]+$|^-[0-9]+\.[0-9]$/) != null
+  }
+
+  private checkNegativeNumbers(numbers: string, separator: RegExp) {
+    const negativeNumbers: string[] = []
+    numbers.split(separator).forEach((num: string) => {
+      if (this.isNegativeNumber(num)) {
+        negativeNumbers.push(num)
+      }
+    })
+    if (negativeNumbers.length != 0) {
+      throw new Error(`Negative not allowed : ${this.printNegativeNumbers(negativeNumbers)}.`)
+    }
+  }
+
+  private printNegativeNumbers(negativeNumbers: string[]) {
+    let msg = ""
+    negativeNumbers.forEach((num) => (msg += num + ", "))
+    msg = msg.slice(0, msg.length - 2)
+    return msg
+  }
+
   private checkNumber(num: string, separator: string, numbers: string) {
+    const negativeNumbers: string[] = []
     if (this.isNumber(num)) {
       const wrongSeparator = num.match(/[^0-9]/)?.[0]
       const positionWrongSeparator = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
