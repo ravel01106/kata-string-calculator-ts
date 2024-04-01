@@ -32,21 +32,15 @@ export class StringCalculator {
     return separator
   }
 
-  private checkNumberSeparators(numbers: string, separator: RegExp, separatorStr: String) {
-    if (numbers.endsWith(",") || numbers.endsWith("\n")) {
+  private checkNumberSeparators(numbers: string, separator: RegExp, separatorStr: string) {
+    if (numbers.endsWith(separatorStr) || numbers.endsWith("\n")) {
       throw new Error(`Number expected but EOF found.`)
-    } else if (numbers.includes(",\n") || numbers.includes("\n,")) {
+    } else if (numbers.includes(`${separatorStr}\n`) || numbers.includes(`\n${separatorStr}`)) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
 
     numbers.split(separator).forEach((num: string) => {
-      console.log("num ->" + num + "<- num")
-      if (num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null) {
-        console.log(num.match(/[^0-9]/)?.[0])
-        throw new Error(
-          `'${separatorStr}' expected but '${num.match(/[^0-9]/)?.[0]}' found at position ${numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)}`,
-        )
-      }
+      this.checkNumber(num, separatorStr, numbers)
     })
   }
 
@@ -56,5 +50,17 @@ export class StringCalculator {
       result = result + Number(num)
     })
     return result
+  }
+
+  private isNumber(num: string) {
+    return num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null
+  }
+
+  private checkNumber(num: string, separator: string, numbers: string) {
+    if (this.isNumber(num)) {
+      const wrongSeparator = num.match(/[^0-9]/)?.[0]
+      const positionWrongSeparator = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
+      throw new Error(`'${separator}' expected but '${wrongSeparator}' found at position ${positionWrongSeparator}`)
+    }
   }
 }
