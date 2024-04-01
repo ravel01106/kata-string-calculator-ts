@@ -52,7 +52,7 @@ export class StringCalculator {
     return result
   }
 
-  private isNumber(num: string) {
+  private isNotNumber(num: string) {
     return num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null
   }
 
@@ -80,8 +80,7 @@ export class StringCalculator {
   }
 
   private checkNumber(num: string, separator: string, numbers: string) {
-    const negativeNumbers: string[] = []
-    if (this.isNumber(num)) {
+    if (this.isNotNumber(num)) {
       const wrongSeparator = num.match(/[^0-9]/)?.[0]
       const positionWrongSeparator = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
       throw new Error(`'${separator}' expected but '${wrongSeparator}' found at position ${positionWrongSeparator}`)
