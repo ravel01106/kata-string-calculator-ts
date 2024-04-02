@@ -11,30 +11,30 @@ export class StringCalculator {
     let delimiter: string = separator.createAndGetSeparator(numbers)
     numbers = separator.obtainNumbersWithoutSeparator(numbers)
 
-    let separatorRegx: RegExp = new RegExp(delimiter + "|\n")
+    let delimiterExpression: RegExp = new RegExp(delimiter + "|\n")
 
-    this.checkNumberSeparators(numbers, separatorRegx, delimiter)
+    this.checkNumberSeparators(numbers, delimiterExpression, delimiter)
 
-    result = this.sumNumbers(separatorRegx, numbers)
+    result = this.sumNumbers(delimiterExpression, numbers)
 
     return result
   }
 
-  private checkNumberSeparators(numbers: string, separator: RegExp, delimiter: string) {
+  private checkNumberSeparators(numbers: string, delimiterExpression: RegExp, delimiter: string) {
     if (numbers.endsWith(delimiter) || numbers.endsWith("\n")) {
       throw new Error(`Number expected but EOF found.`)
     } else if (numbers.includes(`${delimiter}\n`) || numbers.includes(`\n${delimiter}`)) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
-    this.checkNegativeNumbers(numbers, separator)
-    numbers.split(separator).forEach((num: string) => {
+    this.checkNegativeNumbers(numbers, delimiterExpression)
+    numbers.split(delimiterExpression).forEach((num: string) => {
       this.checkNumber(num, delimiter, numbers)
     })
   }
 
-  private sumNumbers(separator: RegExp, numbers: String): number {
+  private sumNumbers(delimiterExpression: RegExp, numbers: String): number {
     let result: number = 0
-    numbers.split(separator).forEach((num: String) => {
+    numbers.split(delimiterExpression).forEach((num: String) => {
       result = result + Number(num)
     })
     return result
@@ -48,9 +48,9 @@ export class StringCalculator {
     return num.match(/^-[0-9]+$|^-[0-9]+\.[0-9]$/) != null
   }
 
-  private checkNegativeNumbers(numbers: string, separator: RegExp) {
+  private checkNegativeNumbers(numbers: string, delimiterExpression: RegExp) {
     const negativeNumbers: string[] = []
-    numbers.split(separator).forEach((num: string) => {
+    numbers.split(delimiterExpression).forEach((num: string) => {
       if (this.isNegativeNumber(num)) {
         negativeNumbers.push(num)
       }
@@ -69,9 +69,9 @@ export class StringCalculator {
 
   private checkNumber(num: string, delimiter: string, numbers: string) {
     if (this.isNotNumber(num)) {
-      const wrongSeparator = num.match(/[^0-9]/)?.[0]
-      const positionWrongSeparator = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
-      throw new Error(`'${delimiter}' expected but '${wrongSeparator}' found at position ${positionWrongSeparator}`)
+      const wrongDelimiter = num.match(/[^0-9]/)?.[0]
+      const positionWrongDelimiter = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
+      throw new Error(`'${delimiter}' expected but '${wrongDelimiter}' found at position ${positionWrongDelimiter}`)
     }
   }
 }
