@@ -1,3 +1,4 @@
+import { NumberChecker } from "./NumberChecker.js"
 import { Separator } from "./utils/Separator.js"
 
 export class StringCalculator {
@@ -26,10 +27,8 @@ export class StringCalculator {
     } else if (numbers.includes(`${delimiter}\n`) || numbers.includes(`\n${delimiter}`)) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
-    this.checkNegativeNumbers(numbers, delimiterExpression)
-    numbers.split(delimiterExpression).forEach((num: string) => {
-      this.checkNumber(num, delimiter, numbers)
-    })
+    let numberChecker = new NumberChecker()
+    numberChecker.checkNumber(numbers, delimiterExpression, delimiter)
   }
 
   private sumNumbers(delimiterExpression: RegExp, numbers: String): number {
@@ -38,40 +37,5 @@ export class StringCalculator {
       result = result + Number(num)
     })
     return result
-  }
-
-  private isNotNumber(num: string) {
-    return num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null
-  }
-
-  private isNegativeNumber(num: string) {
-    return num.match(/^-[0-9]+$|^-[0-9]+\.[0-9]$/) != null
-  }
-
-  private checkNegativeNumbers(numbers: string, delimiterExpression: RegExp) {
-    const negativeNumbers: string[] = []
-    numbers.split(delimiterExpression).forEach((num: string) => {
-      if (this.isNegativeNumber(num)) {
-        negativeNumbers.push(num)
-      }
-    })
-    if (negativeNumbers.length != 0) {
-      throw new Error(`Negative not allowed : ${this.printNegativeNumbers(negativeNumbers)}.`)
-    }
-  }
-
-  private printNegativeNumbers(negativeNumbers: string[]) {
-    let msg = ""
-    negativeNumbers.forEach((num) => (msg += num + ", "))
-    msg = msg.slice(0, msg.length - 2)
-    return msg
-  }
-
-  private checkNumber(num: string, delimiter: string, numbers: string) {
-    if (this.isNotNumber(num)) {
-      const wrongDelimiter = num.match(/[^0-9]/)?.[0]
-      const positionWrongDelimiter = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
-      throw new Error(`'${delimiter}' expected but '${wrongDelimiter}' found at position ${positionWrongDelimiter}`)
-    }
   }
 }
