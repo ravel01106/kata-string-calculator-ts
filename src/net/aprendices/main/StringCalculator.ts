@@ -1,46 +1,34 @@
+import { Separator } from "./utils/Separator.js"
+
 export class StringCalculator {
   add(numbers: string): number {
     let result: number = 0
-    let separator: string = ","
 
     if (numbers == "") return 0
     else if (numbers.length == 1) return Number(numbers)
 
-    if (numbers.startsWith("//")) {
-      separator = this.createCustomSeparator(numbers)
-      numbers = numbers.substring(numbers.indexOf("\n") + 1)
-    }
+    let separator = new Separator()
+    let delimiter: string = separator.createAndGetSeparator(numbers)
+    numbers = separator.obtainNumbersWithoutSeparator(numbers)
 
-    let separatorRegx: RegExp = new RegExp(separator + "|\n")
+    let separatorRegx: RegExp = new RegExp(delimiter + "|\n")
 
-    this.checkNumberSeparators(numbers, separatorRegx, separator)
+    this.checkNumberSeparators(numbers, separatorRegx, delimiter)
 
     result = this.sumNumbers(separatorRegx, numbers)
 
     return result
   }
 
-  private isVerticalBar(separator: String): Boolean {
-    return separator == "|"
-  }
-
-  private createCustomSeparator(numbers: String): string {
-    let separator = numbers.substring(2, numbers.indexOf("\n"))
-
-    separator = this.isVerticalBar(separator) ? "\\|" : separator
-
-    return separator
-  }
-
-  private checkNumberSeparators(numbers: string, separator: RegExp, separatorStr: string) {
-    if (numbers.endsWith(separatorStr) || numbers.endsWith("\n")) {
+  private checkNumberSeparators(numbers: string, separator: RegExp, delimiter: string) {
+    if (numbers.endsWith(delimiter) || numbers.endsWith("\n")) {
       throw new Error(`Number expected but EOF found.`)
-    } else if (numbers.includes(`${separatorStr}\n`) || numbers.includes(`\n${separatorStr}`)) {
+    } else if (numbers.includes(`${delimiter}\n`) || numbers.includes(`\n${delimiter}`)) {
       throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
     }
     this.checkNegativeNumbers(numbers, separator)
     numbers.split(separator).forEach((num: string) => {
-      this.checkNumber(num, separatorStr, numbers)
+      this.checkNumber(num, delimiter, numbers)
     })
   }
 
@@ -79,11 +67,11 @@ export class StringCalculator {
     return msg
   }
 
-  private checkNumber(num: string, separator: string, numbers: string) {
+  private checkNumber(num: string, delimiter: string, numbers: string) {
     if (this.isNotNumber(num)) {
       const wrongSeparator = num.match(/[^0-9]/)?.[0]
       const positionWrongSeparator = numbers.indexOf(`${num.match(/[^0-9]/)?.[0]}`)
-      throw new Error(`'${separator}' expected but '${wrongSeparator}' found at position ${positionWrongSeparator}`)
+      throw new Error(`'${delimiter}' expected but '${wrongSeparator}' found at position ${positionWrongSeparator}`)
     }
   }
 }
