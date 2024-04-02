@@ -1,15 +1,15 @@
 export class Separator {
-  private separator: string = ","
+  private delimiter: string = ","
 
-  private isVerticalBar(separator: String): Boolean {
-    return separator == "|"
+  private isVerticalBar(delimiter: String): Boolean {
+    return delimiter == "|"
   }
   private isCustomSeparator(numbersSeparatedBySeparator: string): boolean {
     return numbersSeparatedBySeparator.startsWith("//")
   }
 
   getSeparator() {
-    return this.separator
+    return this.delimiter
   }
 
   obtainNumbersWithoutCustomSeparator(numbersSeparatedBySeparator: string) {
@@ -20,8 +20,8 @@ export class Separator {
 
   createSeparator(numbersSeparatedBySeparator: string) {
     if (this.isCustomSeparator(numbersSeparatedBySeparator)) {
-      this.separator = numbersSeparatedBySeparator.substring(2, numbersSeparatedBySeparator.indexOf("\n"))
-      this.separator = this.isVerticalBar(this.separator) ? "\\|" : this.separator
+      this.delimiter = numbersSeparatedBySeparator.substring(2, numbersSeparatedBySeparator.indexOf("\n"))
+      this.delimiter = this.isVerticalBar(this.delimiter) ? "\\|" : this.delimiter
     }
   }
 }
