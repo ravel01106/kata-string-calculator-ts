@@ -1,5 +1,6 @@
 import { NumberChecker } from "./NumberChecker.js"
 import { Separator } from "./utils/Separator.js"
+import { Utils } from "./utils/Utils.js"
 
 export class StringCalculator {
   add(numbers: string): number {
@@ -16,7 +17,7 @@ export class StringCalculator {
 
     this.checkNumberSeparators(numbers, delimiterExpression, delimiter)
 
-    result = this.sumNumbers(delimiterExpression, numbers)
+    result = Utils.sumNumbers(delimiterExpression, numbers)
 
     return result
   }
@@ -29,13 +30,5 @@ export class StringCalculator {
     }
     let numberChecker = new NumberChecker()
     numberChecker.checkNumber(numbers, delimiterExpression, delimiter)
-  }
-
-  private sumNumbers(delimiterExpression: RegExp, numbers: String): number {
-    let result: number = 0
-    numbers.split(delimiterExpression).forEach((num: String) => {
-      result = result + Number(num)
-    })
-    return result
   }
 }

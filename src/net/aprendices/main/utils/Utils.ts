@@ -5,6 +5,15 @@ function printNegativeNumbers(negativeNumbers: string[]) {
   return msg
 }
 
+function sumNumbers(delimiterExpression: RegExp, numbers: String): number {
+  let result: number = 0
+  numbers.split(delimiterExpression).forEach((num: String) => {
+    result = result + Number(num)
+  })
+  return result
+}
+
 export const Utils = {
   printNegativeNumbers,
+  sumNumbers,
 }
