@@ -8,7 +8,7 @@ export class Separator {
     return numbersSeparatedBySeparator.startsWith("//")
   }
 
-  obtainNumbersWithoutSeparator(numbersSeparatedBySeparator: string) {
+  obtainNumbersWithoutCustomSeparator(numbersSeparatedBySeparator: string) {
     return this.isCustomSeparator(numbersSeparatedBySeparator)
       ? (numbersSeparatedBySeparator = numbersSeparatedBySeparator.substring(
           numbersSeparatedBySeparator.indexOf("\n") + 1,
@@ -23,5 +23,13 @@ export class Separator {
     }
     console.log("Delimiter -> " + this.delimiter)
     return this.delimiter
+  }
+
+  checkSeparator(numbers: string, delimiter: string) {
+    if (numbers.endsWith(delimiter) || numbers.endsWith("\n")) {
+      throw new Error(`Number expected but EOF found.`)
+    } else if (numbers.includes(`${delimiter}\n`) || numbers.includes(`\n${delimiter}`)) {
+      throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
+    }
   }
 }
