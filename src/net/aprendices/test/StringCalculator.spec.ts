@@ -2,20 +2,22 @@ import { describe, it, expect } from "vitest"
 import { StringCalculator } from "../main/StringCalculator.js"
 
 describe("String calculator should", () => {
+  // Devuelve 0 cuando no hay ninguna expresión
+  // No deberia sumar ningun número cuando no hay expresión
   it(" return 0 when an empty string is passed.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("")
 
     expect(result).toBe(0)
   })
-
+  // Mantiene el mismo número cuando solo recibe un número
   it(" return the number when given only a number.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("2")
 
     expect(result).toBe(2)
   })
-
+  // Deberia sumar números separados por comas
   it(" return the total sum when given numbers separated by commas.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("1,2,3")
@@ -23,13 +25,14 @@ describe("String calculator should", () => {
     expect(result).toBe(6)
   })
 
+  // Deberia sumar números decimales separados por comas
   it(" return the total sum when given decimals separated by commas.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("1.1,2.2,3.3")
 
     expect(result).toBe(6.6)
   })
-
+  // Deberia sumar números decimales separados por comas o salto de linea
   it(" return the total sum when given numbers separated by commas or newlines.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("1\n2,3")
@@ -37,6 +40,7 @@ describe("String calculator should", () => {
     expect(result).toBe(6)
   })
 
+  // lanza error cuando ...
   it(" return error when there are two separators together.", () => {
     const stringCalculator = new StringCalculator()
     expect(() => stringCalculator.add("175.2,\n35")).toThrowError(
@@ -44,17 +48,20 @@ describe("String calculator should", () => {
     )
   })
 
+  // lanza ...
   it(" return error when the last character is a separator.", () => {
     const stringCalculator = new StringCalculator()
     expect(() => stringCalculator.add("1,3,")).toThrowError(/^Number expected but EOF found.$/)
   })
 
+  // change
   it(" return the total sum when given numbers separated by custom separator.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("//;\n1;2")
 
     expect(result).toBe(3)
   })
+
   it(" return the total sum when given numbers separated by another custom separator.", () => {
     const stringCalculator = new StringCalculator()
     const result = stringCalculator.add("//sep\n2sep3")
@@ -79,6 +86,7 @@ describe("String calculator should", () => {
     expect(() => stringCalculator.add("-1,2")).toThrowError(/^Negative not allowed : -1.$/)
   })
 
+  // throw error with all negative numbers
   it(" return error with all negative numbers when it has.", () => {
     const stringCalculator = new StringCalculator()
     expect(() => stringCalculator.add("2,-4,-5")).toThrowError(/^Negative not allowed : -4, -5.$/)

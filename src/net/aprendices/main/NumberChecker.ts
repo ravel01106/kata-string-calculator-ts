@@ -1,5 +1,6 @@
 import { Utils } from "./utils/Utils.js"
 
+// create CheckerExpression class
 export class NumberChecker {
   private isNotNumber(num: string) {
     return num.match(/^[0-9]+$|^[0-9]+\.[0-9]$/) == null
@@ -9,6 +10,8 @@ export class NumberChecker {
     return num.match(/^-[0-9]+$|^-[0-9]+\.[0-9]$/) != null
   }
 
+  // Solo existe numeros positivos
+  // No existe numeros negativos
   private checkNegativeNumbers(numbers: string, delimiterExpression: RegExp) {
     const negativeNumbers: string[] = []
     numbers.split(delimiterExpression).forEach((num: string) => {
@@ -21,6 +24,7 @@ export class NumberChecker {
     }
   }
 
+  // Revisar nombre funcion y parametros
   private checkPositiveNumber(num: string, delimiter: string, numbers: string) {
     if (this.isNotNumber(num)) {
       const wrongDelimiter = num.match(/[^0-9]/)?.[0]

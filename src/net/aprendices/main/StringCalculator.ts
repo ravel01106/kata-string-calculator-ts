@@ -2,24 +2,26 @@ import { NumberChecker } from "./NumberChecker.js"
 import { Separator } from "./utils/Separator.js"
 import { Utils } from "./utils/Utils.js"
 
+// numbers -> expression
+
 export class StringCalculator {
-  add(numbers: string): number {
+  add(expression: string): number {
     let result: number = 0
     let numberChecker = new NumberChecker()
     let separator = new Separator()
 
-    if (numbers == "") return 0
-    else if (numbers.length == 1) return Number(numbers)
+    if (expression == "") return 0
+    else if (expression.length == 1) return Number(expression)
 
-    let delimiter: string = separator.createAndGetSeparator(numbers)
-    numbers = separator.obtainNumbersWithoutCustomSeparator(numbers)
+    let delimiter: string = separator.createAndGetSeparator(expression)
+    expression = separator.obtainNumbersWithoutCustomSeparator(expression)
 
     let delimiterExpression: RegExp = new RegExp(delimiter + "|\n")
 
-    separator.checkSeparator(numbers, delimiter)
-    numberChecker.checkNumber(numbers, delimiterExpression, delimiter)
+    separator.checkSeparator(expression, delimiter)
+    numberChecker.checkNumber(expression, delimiterExpression, delimiter)
 
-    result = Utils.sumNumbers(delimiterExpression, numbers)
+    result = Utils.sumNumbers(delimiterExpression, expression)
 
     return result
   }
