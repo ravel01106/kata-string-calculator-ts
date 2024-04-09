@@ -24,12 +24,4 @@ export class Separator {
     console.log("Delimiter -> " + this.delimiter)
     return this.delimiter
   }
-
-  checkSeparator(numbers: string, delimiter: string) {
-    if (numbers.endsWith(delimiter) || numbers.endsWith("\n")) {
-      throw new Error(`Number expected but EOF found.`)
-    } else if (numbers.includes(`${delimiter}\n`) || numbers.includes(`\n${delimiter}`)) {
-      throw new Error(`Number expected but '\\n' found at the position ${numbers.indexOf("\n")}.`)
-    }
-  }
 }

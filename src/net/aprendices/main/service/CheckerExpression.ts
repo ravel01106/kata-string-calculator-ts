@@ -24,8 +24,18 @@ export class CheckerExpression {
     }
   }
 
-  // Revisar nombre funcion y parametros
-  private thereIsNoWrongDelimiter(expression: string, delimiter: string, delimiterRegExp: RegExp) {
+  checkExpression(expression: string, delimiterRegExp: RegExp, delimiter: string) {
+    this.thereAreOnlyPositiveNumbers(expression, delimiterRegExp)
+    this.checkDelimiter(expression, delimiter, delimiterRegExp)
+  }
+
+  private checkDelimiter(expression: string, delimiter: string, delimiterRegExp: RegExp) {
+    if (expression.endsWith(delimiter) || expression.endsWith("\n")) {
+      throw new Error(`Number expected but EOF found.`)
+    } else if (expression.includes(`${delimiter}\n`) || expression.includes(`\n${delimiter}`)) {
+      throw new Error(`Number expected but '\\n' found at the position ${expression.indexOf("\n")}.`)
+    }
+
     expression.split(delimiterRegExp).forEach((num: string) => {
       if (this.isNotNumber(num)) {
         const wrongDelimiter = num.match(/[^0-9]/)?.[0]
@@ -33,10 +43,5 @@ export class CheckerExpression {
         throw new Error(`'${delimiter}' expected but '${wrongDelimiter}' found at position ${positionWrongDelimiter}`)
       }
     })
-  }
-
-  checkExpression(expression: string, delimiterRegExp: RegExp, delimiter: string) {
-    this.thereAreOnlyPositiveNumbers(expression, delimiterRegExp)
-    this.thereIsNoWrongDelimiter(expression, delimiter, delimiterRegExp)
   }
 }
