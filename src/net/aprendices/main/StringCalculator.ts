@@ -1,4 +1,4 @@
-import { NumberChecker } from "./NumberChecker.js"
+import { CheckerExpression } from "./service/CheckerExpression.js"
 import { Separator } from "./utils/Separator.js"
 import { Utils } from "./utils/Utils.js"
 
@@ -7,7 +7,7 @@ import { Utils } from "./utils/Utils.js"
 export class StringCalculator {
   add(expression: string): number {
     let result: number = 0
-    let numberChecker = new NumberChecker()
+    let numberChecker = new CheckerExpression()
     let separator = new Separator()
 
     if (expression == "") return 0
@@ -19,7 +19,7 @@ export class StringCalculator {
     let delimiterExpression: RegExp = new RegExp(delimiter + "|\n")
 
     separator.checkSeparator(expression, delimiter)
-    numberChecker.checkNumber(expression, delimiterExpression, delimiter)
+    numberChecker.checkExpression(expression, delimiterExpression, delimiter)
 
     result = Utils.sumNumbers(delimiterExpression, expression)
 
